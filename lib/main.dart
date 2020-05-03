@@ -28,9 +28,8 @@ class _MyApp extends State<MyApp> {
   Widget _buildRTLBottomBar() {
     return RTLBottomBar(
       currentIndex: _currentIdx,
-      onTap: (int idx) => setState(() {
-        _currentIdx = idx;
-      }),
+      onTap: (int idx) => controller.animateToPage(idx,
+          duration: Duration(milliseconds: 1300), curve: Curves.ease),
       backgroundColor: Colors.white,
       items: _items,
       textColor: Color(0xfff95563),
@@ -38,13 +37,30 @@ class _MyApp extends State<MyApp> {
     );
   }
 
+  Widget _buildAppBar() => AppBar(title: Text('RTL Bottom Navigation'));
+
+  final controller = PageController(
+    initialPage: 0,
+  );
+
+  Widget _buildPageView() => PageView(
+    children: _routes,
+    controller: controller,
+    reverse: true,
+    onPageChanged: (idx) {
+      setState(() {
+        _currentIdx = idx;
+      });
+    },
+  );
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Gulf'),
       home: Scaffold(
-        appBar: AppBar(title: Text('RTL Bottom Navigation')),
-        body: _routes[_currentIdx],
+        appBar: _buildAppBar(),
+        body: _buildPageView(),
         bottomNavigationBar: _buildRTLBottomBar(),
       ),
     );

@@ -44,7 +44,7 @@ class _RTLBottomBarState extends State<RTLBottomBar> {
   }
 
   Widget _buildRowItem(int idx, RTLbottomItem item) {
-    bool state =  (idx == _currentIdx);
+    bool state = (idx == _currentIdx);
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -71,7 +71,7 @@ class _RTLBottomBarState extends State<RTLBottomBar> {
           style:
               TextStyle(color: state ? widget.selectedItemColor : Colors.black),
         ),
-        SizedBox(width: 5),
+        SizedBox(width: 7),
         SvgPicture.asset(item.icon,
             color: state ? widget.textColor : Colors.black)
       ],
@@ -80,6 +80,7 @@ class _RTLBottomBarState extends State<RTLBottomBar> {
 
   @override
   Widget build(BuildContext context) {
+    _currentIdx = widget.currentIndex;
     return Container(
       color: widget.backgroundColor,
       width: MediaQuery.of(context).size.width,
